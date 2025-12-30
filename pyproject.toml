@@ -1,0 +1,25 @@
+[project]
+name = "week3-ml-baseline-system"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "numpy",
+  "pandas",
+  "pyarrow",
+  "typer",
+  "scikit-learn",
+  "joblib",
+]
+
+[project.scripts]
+ml-baseline = "ml_baseline.cli:app"
+
+[dependency-groups]
+dev = [
+    "pytest",
+]
+
+[tool.uv]
+package = true

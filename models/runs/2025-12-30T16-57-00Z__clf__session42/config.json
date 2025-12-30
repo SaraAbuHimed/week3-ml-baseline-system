@@ -1,0 +1,13 @@
+{
+  "features_path": "data/processed/features.parquet",
+  "target": "is_high_value",
+  "task": "classification",
+  "id_cols": [
+    "id"
+  ],
+  "time_col": null,
+  "group_col": null,
+  "session_id": 42,
+  "train_size": 0.8,
+  "fold": 5
+}

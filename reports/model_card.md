@@ -10,7 +10,7 @@
 - **Feature table:** `data/processed/features.csv` (optional: `.parquet`)
 - **Unit of analysis:** one row per user
 - **Target column:** `is_high_value`
-  - Positive class: `1`
+  - **Positive class:** `1`
 - **Optional IDs (passthrough):**
   - `user_id`
 
@@ -18,23 +18,31 @@
 | Column name     | Type     | Description |
 |-----------------|----------|-------------|
 | user_id         | string   | Unique user identifier |
-| country         | string   | User country (US, CA, GB) |
+| country         | string   | User country |
 | n_orders        | integer  | Number of orders |
 | avg_amount      | float    | Average order amount |
 | total_amount    | float    | Total spend |
 | is_high_value   | integer  | Target label (1 = high value) |
 
-## Splits (draft)
-- **Holdout strategy:** random stratified split
-- **Leakage risks:** total_amount is derived from n_orders and avg_amount; no future data leakage assumed
+## Splits (evaluation plan)
+- **Holdout strategy:** random stratified holdout
+- **Test size:** 0.20
+- **Random seed:** 42
+- **Leakage risks:** `total_amount` is derived from `n_orders` and `avg_amount`; no future information is used
 
-## Metrics (draft)
-- **Primary:** ROC-AUC (robust to class imbalance)
-- **Baseline:** dummy classifier must be reported
+## Metrics
+- **Primary metric:** ROC-AUC  
+  *Chosen because the dataset is imbalanced and ROC-AUC evaluates ranking quality independent of a fixed threshold.*
+- **Baseline:** Dummy classifier (most-frequent strategy) reported on the same holdout set
 
 ## Shipping
-- **Artifacts:** trained model, input schema, metrics, holdout tables, environment snapshot
-- **Known limitations:** synthetic data; limited feature diversity
+- **Artifacts:**
+  - trained model (`model/model.joblib`)
+  - metrics (`metrics/baseline_holdout.json`, `metrics/model_holdout.json`)
+  - training config (`config.json`)
+- **Known limitations:** synthetic data; simplified feature set
 - **Monitoring (sketch):**
-  - feature drift (country distribution)
-  - prediction rate of positive class
+  - class balance drift
+  - feature distribution drift (e.g., country)
+  - positive prediction rate over time
+
