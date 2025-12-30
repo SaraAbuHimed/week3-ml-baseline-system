@@ -37,7 +37,4 @@ def make_sample_feature_table(
 
     return csv_path
 
-if __name__ == "__main__":
-    print(make_sample_feature_table())
-
 
