@@ -1,0 +1,25 @@
+{
+  "task": "classification",
+  "target": "is_high_value",
+  "features_path": "data/processed/features.parquet",
+  "features_sha256": "bce383b3c7a6501454b05be84208fa2880d2f005f186ca71f54da25fcd5b6aed",
+  "required_feature_columns": [
+    "user_id",
+    "country",
+    "n_orders",
+    "avg_amount",
+    "total_amount"
+  ],
+  "optional_id_columns": [],
+  "feature_dtypes": {
+    "user_id": "object",
+    "country": "object",
+    "n_orders": "int64",
+    "avg_amount": "float64",
+    "total_amount": "float64"
+  },
+  "policy_unknown_categories": "tolerant (OneHotEncoder handle_unknown=ignore)",
+  "forbidden_columns": [
+    "is_high_value"
+  ]
+}

@@ -1,6 +1,11 @@
 numpy
 pandas
 pyarrow
-typer
 scikit-learn
-joblib
+joblib==1.3.2
+plotly
+pycaret
+ipykernel
+kagglehub
+kaggle
+certifi

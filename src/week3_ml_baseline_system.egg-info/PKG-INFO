@@ -7,6 +7,11 @@ Description-Content-Type: text/markdown
 Requires-Dist: numpy
 Requires-Dist: pandas
 Requires-Dist: pyarrow
-Requires-Dist: typer
 Requires-Dist: scikit-learn
-Requires-Dist: joblib
+Requires-Dist: joblib==1.3.2
+Requires-Dist: plotly
+Requires-Dist: pycaret
+Requires-Dist: ipykernel
+Requires-Dist: kagglehub
+Requires-Dist: kaggle
+Requires-Dist: certifi

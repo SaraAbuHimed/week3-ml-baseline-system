@@ -6,6 +6,7 @@ src/ml_baseline/io.py
 src/ml_baseline/metrics.py
 src/ml_baseline/pipeline.py
 src/ml_baseline/sample_data.py
+src/ml_baseline/schema.py
 src/ml_baseline/splits.py
 src/ml_baseline/train.py
 src/week3_ml_baseline_system.egg-info/PKG-INFO

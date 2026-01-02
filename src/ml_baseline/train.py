@@ -343,13 +343,39 @@ def run_train(cfg: TrainCfg, *, root: Path, run_tag: str = "clf") -> Path:
     proba = model.predict_proba(X_hold)[:, 1] if hasattr(model, "predict_proba") else None
     model_metrics = _compute_metrics(y_hold, pred, y_proba=proba)
 
+    # --- tables: holdout_predictions ---
+    holdout_predictions = pd.DataFrame({
+        "y_true": y_hold.reset_index(drop=True).astype(int),
+        "y_pred": pd.Series(pred).reset_index(drop=True).astype(int),
+    })
+
+    if proba is not None:
+        holdout_predictions["y_score"] = (
+            pd.Series(proba).reset_index(drop=True).astype(float)
+        )
+
+    holdout_predictions.to_csv(
+        run_dir / "tables" / "holdout_predictions.csv",
+        index=False,
+    )
+
+    # --- tables: holdout_input (features-only; NO target) ---
+    holdout_input = X_hold.reset_index(drop=True).copy()
+
+    holdout_input.to_csv(
+        run_dir / "tables" / "holdout_input.csv",
+        index=False,
+    )
+
     # --- save artifacts ---
     (run_dir / "metrics" / "baseline_holdout.json").write_text(
         json.dumps(dummy_metrics, indent=2), encoding="utf-8"
     )
-    (run_dir / "metrics" / "model_holdout.json").write_text(
-        json.dumps(model_metrics, indent=2), encoding="utf-8"
+    (run_dir / "metrics" / "holdout_metrics.json").write_text(
+        json.dumps(model_metrics, indent=2) + "\n", encoding="utf-8",
     )
+
+
 
     (run_dir / "tables" / "holdout_preview.csv").write_text(
         pd.concat([X_hold.reset_index(drop=True), y_hold.reset_index(drop=True)], axis=1).head(25).to_csv(index=False),
