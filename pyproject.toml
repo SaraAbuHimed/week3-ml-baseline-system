@@ -16,6 +16,7 @@ dependencies = [
     "kagglehub",
     "kaggle",
     "certifi",
+    "seaborn"
 ]
 
 [project.scripts]
